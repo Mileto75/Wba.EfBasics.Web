@@ -35,9 +35,9 @@ namespace Wba.EfBasics.Web
 
 
             //configureer  DbContext
-            services.AddDbContext<SchoolDbContext>
+            services.AddDbContext<MovieDbContext>
                 (options => options.UseSqlServer
-                (Configuration.GetConnectionString("SchoolDb")));
+                (Configuration.GetConnectionString("MovieDb")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
