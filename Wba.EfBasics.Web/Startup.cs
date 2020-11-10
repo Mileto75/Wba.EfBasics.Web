@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Wba.EfBasics.Web.Data;
 
 namespace Wba.EfBasics.Web
 {
@@ -32,6 +34,10 @@ namespace Wba.EfBasics.Web
             });
 
 
+            //configureer  DbContext
+            services.AddDbContext<SchoolDbContext>
+                (options => options.UseSqlServer
+                (Configuration.GetConnectionString("SchoolDb")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
