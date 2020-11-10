@@ -10,8 +10,8 @@ using Wba.EfBasics.Web.Data;
 namespace Wba.EfBasics.Web.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20201110141821_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20201110144724_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,8 @@ namespace Wba.EfBasics.Web.Migrations
 
                     b.Property<string>("CourseName");
 
+                    b.Property<int>("Duration");
+
                     b.Property<int?>("TeacherId");
 
                     b.HasKey("Id");
@@ -36,6 +38,23 @@ namespace Wba.EfBasics.Web.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("Wba.EfBasics.Domain.Entities.Student", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("CourseId");
+
+                    b.Property<string>("StudentName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Wba.EfBasics.Domain.Entities.Teacher", b =>
@@ -58,6 +77,13 @@ namespace Wba.EfBasics.Web.Migrations
                     b.HasOne("Wba.EfBasics.Domain.Entities.Teacher", "Teacher")
                         .WithMany("Courses")
                         .HasForeignKey("TeacherId");
+                });
+
+            modelBuilder.Entity("Wba.EfBasics.Domain.Entities.Student", b =>
+                {
+                    b.HasOne("Wba.EfBasics.Domain.Entities.Course", "Course")
+                        .WithMany("Students")
+                        .HasForeignKey("CourseId");
                 });
 #pragma warning restore 612, 618
         }

@@ -38,6 +38,23 @@ namespace Wba.EfBasics.Web.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("Wba.EfBasics.Domain.Entities.Student", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("CourseId");
+
+                    b.Property<string>("StudentName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Students");
+                });
+
             modelBuilder.Entity("Wba.EfBasics.Domain.Entities.Teacher", b =>
                 {
                     b.Property<int>("Id")
@@ -58,6 +75,13 @@ namespace Wba.EfBasics.Web.Migrations
                     b.HasOne("Wba.EfBasics.Domain.Entities.Teacher", "Teacher")
                         .WithMany("Courses")
                         .HasForeignKey("TeacherId");
+                });
+
+            modelBuilder.Entity("Wba.EfBasics.Domain.Entities.Student", b =>
+                {
+                    b.HasOne("Wba.EfBasics.Domain.Entities.Course", "Course")
+                        .WithMany("Students")
+                        .HasForeignKey("CourseId");
                 });
 #pragma warning restore 612, 618
         }
