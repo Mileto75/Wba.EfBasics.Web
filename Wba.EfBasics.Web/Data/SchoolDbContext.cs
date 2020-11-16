@@ -15,12 +15,25 @@ namespace Wba.EfBasics.Web.Data
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<ContactInfo> ContactInfos { get; set; }
 
         //verplichte constructor met base call!!
         public SchoolDbContext
             (DbContextOptions<SchoolDbContext> options)
             :base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //one on one relatie met Fluent Api
+            modelBuilder.Entity<ContactInfo>()
+                .HasOne(c => c.Teacher)
+                .WithOne(t => t.ContactInfo)
+                .HasForeignKey<ContactInfo>(c => c.TeacherId);
+                
+            
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
