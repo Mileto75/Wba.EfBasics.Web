@@ -31,7 +31,14 @@ namespace Wba.EfBasics.Web.Data
                 .HasOne(c => c.Teacher)
                 .WithOne(t => t.ContactInfo)
                 .HasForeignKey<ContactInfo>(c => c.TeacherId);
-                
+
+            // one to many relatie met Fluent Api
+            modelBuilder.Entity<Course>()
+                .HasOne(c => c.Teacher)
+                .WithMany(t => t.Courses)
+                .HasForeignKey(c => c.TeacherId);
+
+            //Many to Many relatie
             
             base.OnModelCreating(modelBuilder);
         }
