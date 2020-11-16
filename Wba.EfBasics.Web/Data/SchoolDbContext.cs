@@ -39,6 +39,9 @@ namespace Wba.EfBasics.Web.Data
                 .HasForeignKey(c => c.TeacherId);
 
             //Many to Many relatie
+            modelBuilder.Entity<CoursesTeachers>()
+                .HasKey(ct => new { ct.CourseId, ct.TeacherId });
+
             
             base.OnModelCreating(modelBuilder);
         }

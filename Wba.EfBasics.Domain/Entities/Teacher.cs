@@ -15,6 +15,6 @@ namespace Wba.EfBasics.Domain.Entities
         [Required]
         public decimal YearlyWage { get; set; }
         public ContactInfo ContactInfo { get; set; }
-        public ICollection<Course> Courses { get; set; }
+        public ICollection<CoursesTeachers> Courses { get; set; }
     }
 }
