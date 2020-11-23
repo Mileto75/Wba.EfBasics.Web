@@ -27,6 +27,7 @@ namespace Wba.EfBasics.Web.Controllers
             var courseInDb = _schoolDbContext
                 .Courses
                 .SingleOrDefault(c => c.Id == 2);
+            
             //haal alle cursussen op
             var courses = _schoolDbContext.Courses.ToList();
             foreach(var course in courses)
@@ -39,12 +40,28 @@ namespace Wba.EfBasics.Web.Controllers
             var coursesWb = _schoolDbContext
                 .Courses
                 .Where(c => c.CourseName.Contains("WB"))
+                .OrderBy(c => c.CourseName)
                 .ToList();
             foreach(var courseWb in coursesWb)
             {
                 Console.WriteLine($"{courseWb.Id}-{courseWb.CourseName}");
             }
-
+            //selectie van veld(en)
+            //bv enkel de courseName = enkel veld
+            var courseOnlyTitle = _schoolDbContext
+                .Courses
+                .OrderBy(c => c.CourseName)
+                .Select(c => c.CourseName)//vanaf hier = lijst van string
+                .ToList();
+            //select van 2(of meer) velden
+            //gebruik anoniem object
+            //vb Id en Coursename
+            var coursesTitleId = _schoolDbContext
+                .Courses
+                .OrderBy(c => c.CourseName)
+                .Select(c => new {c.CourseName,c.Id })
+                .ToList();
+            
             return View();
         }
 
