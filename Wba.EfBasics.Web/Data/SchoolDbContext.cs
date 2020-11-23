@@ -16,6 +16,7 @@ namespace Wba.EfBasics.Web.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<ContactInfo> ContactInfos { get; set; }
+        public DbSet<CoursesTeachers> CoursesTeachers { get; set; }
 
         //verplichte constructor met base call!!
         public SchoolDbContext

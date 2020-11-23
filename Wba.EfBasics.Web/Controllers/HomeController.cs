@@ -83,6 +83,26 @@ namespace Wba.EfBasics.Web.Controllers
                 }
             }
 
+            //toevoegen van data
+            //single object(zonder gerelateerde data)
+            //var newTeacher = new Teacher();
+            //newTeacher.TeacherName = "Siegfried Deerdeyn";
+            //change tracker
+           // _schoolDbContext.Teachers.Add(newTeacher);
+
+
+            //maak een nieuwe teacher
+            //maak een nieuwe cursus
+            //voeg ze toe aan CourseTeachers
+            var newTeacher = new Teacher
+            { TeacherName = "Willie Schokkelé",YearlyWage=20000 };
+            var newCourse = new Course { CourseName = "CIA", Duration = 20 };
+            var courseTeacher = new CoursesTeachers
+            { Course = newCourse, Teacher = newTeacher };
+            //toevoegen aan de databasecontext
+            _schoolDbContext.CoursesTeachers.Add(courseTeacher);
+            //opslaan gebeurt op het einde
+            _schoolDbContext.SaveChanges();
             return View();
         }
 
