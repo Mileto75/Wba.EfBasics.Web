@@ -74,6 +74,14 @@ namespace Wba.EfBasics.Web.Controllers
                 .ThenInclude(ct => ct.Teacher)
                 .OrderBy(c => c.CourseName)//join met Taachers
                 .ToList();
+            foreach(var coursesTeacher in coursesTeachers)
+            {
+                Console.WriteLine($"{coursesTeacher?.CourseName}");
+                foreach(var teacher in coursesTeacher?.Teachers)
+                {
+                    Console.Write($"{teacher?.Teacher?.TeacherName} ");
+                }
+            }
 
             return View();
         }
