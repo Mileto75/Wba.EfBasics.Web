@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Wba.EfBasics.Domain.Entities;
 using Wba.EfBasics.Web.Data;
 using Wba.EfBasics.Web.Models;
@@ -61,7 +62,19 @@ namespace Wba.EfBasics.Web.Controllers
                 .OrderBy(c => c.CourseName)
                 .Select(c => new {c.CourseName,c.Id })
                 .ToList();
-            
+
+            //ophalen gerelateerde data
+            //gebruik de include method 
+            //(rechtreeks gerelateerd)
+            //ThenInclude (onrechtstreeks gerelateerd)
+            //haal courses met hun teachers op
+            var coursesTeachers = _schoolDbContext
+                .Courses
+                .Include(c => c.Teachers)//join CoursesTeachers
+                .ThenInclude(ct => ct.Teacher)
+                .OrderBy(c => c.CourseName)//join met Taachers
+                .ToList();
+
             return View();
         }
 

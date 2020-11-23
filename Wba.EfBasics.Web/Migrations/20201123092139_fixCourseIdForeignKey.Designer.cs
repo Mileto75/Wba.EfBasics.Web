@@ -10,8 +10,8 @@ using Wba.EfBasics.Web.Data;
 namespace Wba.EfBasics.Web.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20201123080700_firstMigration")]
-    partial class firstMigration
+    [Migration("20201123092139_fixCourseIdForeignKey")]
+    partial class fixCourseIdForeignKey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,7 +41,7 @@ namespace Wba.EfBasics.Web.Migrations
 
             modelBuilder.Entity("Wba.EfBasics.Domain.Entities.Course", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -60,11 +60,7 @@ namespace Wba.EfBasics.Web.Migrations
 
                     b.Property<int>("TeacherId");
 
-                    b.Property<long?>("CourseId1");
-
                     b.HasKey("CourseId", "TeacherId");
-
-                    b.HasIndex("CourseId1");
 
                     b.HasIndex("TeacherId");
 
@@ -77,7 +73,7 @@ namespace Wba.EfBasics.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("CourseId");
+                    b.Property<int?>("CourseId");
 
                     b.Property<string>("StudentName");
 
@@ -117,7 +113,8 @@ namespace Wba.EfBasics.Web.Migrations
                 {
                     b.HasOne("Wba.EfBasics.Domain.Entities.Course", "Course")
                         .WithMany("Teachers")
-                        .HasForeignKey("CourseId1");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Wba.EfBasics.Domain.Entities.Teacher", "Teacher")
                         .WithMany("Courses")

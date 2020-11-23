@@ -6,7 +6,7 @@ namespace Wba.EfBasics.Domain.Entities
 {
     public class Course
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string CourseName { get; set; }
         public int Duration { get; set; }
         public ICollection<CoursesTeachers> Teachers { get; set; }

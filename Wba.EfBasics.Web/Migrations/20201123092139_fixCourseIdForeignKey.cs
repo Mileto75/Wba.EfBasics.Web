@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Wba.EfBasics.Web.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class fixCourseIdForeignKey : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace Wba.EfBasics.Web.Migrations
                 name: "Courses",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CourseName = table.Column<string>(nullable: true),
                     Duration = table.Column<int>(nullable: false)
@@ -42,7 +42,7 @@ namespace Wba.EfBasics.Web.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     StudentName = table.Column<string>(nullable: true),
-                    CourseId = table.Column<long>(nullable: true)
+                    CourseId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,7 +79,6 @@ namespace Wba.EfBasics.Web.Migrations
                 name: "CoursesTeachers",
                 columns: table => new
                 {
-                    CourseId1 = table.Column<long>(nullable: true),
                     TeacherId = table.Column<int>(nullable: false),
                     CourseId = table.Column<int>(nullable: false)
                 },
@@ -87,11 +86,11 @@ namespace Wba.EfBasics.Web.Migrations
                 {
                     table.PrimaryKey("PK_CoursesTeachers", x => new { x.CourseId, x.TeacherId });
                     table.ForeignKey(
-                        name: "FK_CoursesTeachers_Courses_CourseId1",
-                        column: x => x.CourseId1,
+                        name: "FK_CoursesTeachers_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CoursesTeachers_Teachers_TeacherId",
                         column: x => x.TeacherId,
@@ -105,11 +104,6 @@ namespace Wba.EfBasics.Web.Migrations
                 table: "ContactInfos",
                 column: "TeacherId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoursesTeachers_CourseId1",
-                table: "CoursesTeachers",
-                column: "CourseId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CoursesTeachers_TeacherId",
