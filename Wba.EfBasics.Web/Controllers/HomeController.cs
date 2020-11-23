@@ -33,6 +33,18 @@ namespace Wba.EfBasics.Web.Controllers
             {
                 Console.WriteLine($"{course.Id}-{course.CourseName}");
             }
+            //selectie op basis van voorwaarden
+            //vb haal alle cursussen die beginnen met WB
+            //linq Where
+            var coursesWb = _schoolDbContext
+                .Courses
+                .Where(c => c.CourseName.Contains("WB"))
+                .ToList();
+            foreach(var courseWb in coursesWb)
+            {
+                Console.WriteLine($"{courseWb.Id}-{courseWb.CourseName}");
+            }
+
             return View();
         }
 
