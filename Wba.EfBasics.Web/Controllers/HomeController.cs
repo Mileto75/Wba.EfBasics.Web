@@ -5,17 +5,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Wba.EfBasics.Domain.Entities;
+using Wba.EfBasics.Web.Data;
 using Wba.EfBasics.Web.Models;
 
 namespace Wba.EfBasics.Web.Controllers
 {
     public class HomeController : Controller
     {
+        //injecteer de databaseContext
+        //declareer een private readonly DbContext
+        private readonly SchoolDbContext _schoolDbContext;
+        //injecteer de DbContext dmv Constructor
+        public HomeController(SchoolDbContext schoolDbContext)
+        {
+            //injectie in controller
+            _schoolDbContext = schoolDbContext;
+        }
         public IActionResult Index()
         {
-            IList<int> numbers
-                = new List<int>();
-            
+            //haal de cursus op met id 1
+            var courseInDb = _schoolDbContext
+                .Courses
+                .SingleOrDefault(c => c.Id == 2);
+            //haal alle cursussen op
+            var courses = _schoolDbContext.Courses.ToList();
+            foreach(var course in courses)
+            {
+                Console.WriteLine($"{course.Id}-{course.CourseName}");
+            }
             return View();
         }
 
